@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Graph;
 use Illuminate\Http\Request;
 
 class GraphController extends Controller
@@ -14,6 +15,7 @@ class GraphController extends Controller
     public function index()
     {
         //
+        return Graph::all();
     }
 
     /**
@@ -35,6 +37,7 @@ class GraphController extends Controller
     public function store(Request $request)
     {
         //
+        return 'adding new graph';
     }
 
     /**
@@ -46,6 +49,7 @@ class GraphController extends Controller
     public function show($id)
     {
         //
+        return Graph::findOrFail($id);
     }
 
     /**
@@ -57,6 +61,7 @@ class GraphController extends Controller
     public function edit($id)
     {
         //
+        return 'editing';
     }
 
     /**
@@ -69,6 +74,7 @@ class GraphController extends Controller
     public function update(Request $request, $id)
     {
         //
+        return 'Updating';
     }
 
     /**
@@ -80,5 +86,11 @@ class GraphController extends Controller
     public function destroy($id)
     {
         //
+        return 'Deleting';
+    }
+
+    public function statistics($id)
+    {
+        return Graph::findOrFail($id);
     }
 }
