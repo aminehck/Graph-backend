@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Graph;
+use App\Http\Resources\GraphResource;
 use Illuminate\Http\Request;
 
 class GraphController extends Controller
@@ -15,7 +16,7 @@ class GraphController extends Controller
     public function index()
     {
         //
-        return Graph::all();
+        return GraphResource::collection(Graph::with('nodes')->get());
     }
 
     /**
@@ -37,7 +38,11 @@ class GraphController extends Controller
     public function store(Request $request)
     {
         //
-        return 'adding new graph';
+        $graph = Graph::create([
+            'name' => $request->name,
+            'description' => $request->description,
+          ]);
+        return new GraphResource($graph);
     }
 
     /**
@@ -49,7 +54,8 @@ class GraphController extends Controller
     public function show($id)
     {
         //
-        return Graph::findOrFail($id);
+        $graph = Graph::findOrFail($id);
+        return new GraphResource($graph);
     }
 
     /**
@@ -74,7 +80,9 @@ class GraphController extends Controller
     public function update(Request $request, $id)
     {
         //
-        return 'Updating';
+        $graph = Graph::findOrFail($id);
+        $graph->update($request->all());
+        return new GraphResource($graph);
     }
 
     /**
@@ -85,8 +93,9 @@ class GraphController extends Controller
      */
     public function destroy($id)
     {
-        //
-        return 'Deleting';
+        $graph = Graph::findOrFail($id);
+        $graph->delete();
+        return response()->json(null, 204);
     }
 
     public function statistics($id)

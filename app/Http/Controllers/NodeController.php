@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Node;
 use Illuminate\Http\Request;
+use App\Http\Resources\NodeResource;
 
 class NodeController extends Controller
 {
@@ -15,6 +16,7 @@ class NodeController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -41,12 +43,14 @@ class NodeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Node  $node
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Node $node)
+    public function show($id)
     {
         //
+        $node = Node::findOrFail($id);
+        return new NodeResource($node);
     }
 
     /**
