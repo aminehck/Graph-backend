@@ -16,17 +16,7 @@ class GraphController extends Controller
     public function index()
     {
         //
-        return GraphResource::collection(Graph::with('nodes')->get());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return GraphResource::collection(Graph::with('nodes')->orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -59,18 +49,6 @@ class GraphController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-        return 'editing';
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -94,6 +72,10 @@ class GraphController extends Controller
     public function destroy($id)
     {
         $graph = Graph::findOrFail($id);
+        $graph->nodes()->each(function ($node) {
+            $node->edges()->delete();
+            $node->delete();
+        });
         $graph->delete();
         return response()->json(null, 204);
     }

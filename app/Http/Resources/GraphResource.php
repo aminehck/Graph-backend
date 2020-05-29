@@ -19,6 +19,8 @@ class GraphResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'nodes' => NodeResource::collection(Node::where('graph_id', '=', $this->id)->get()),
         ];
     }

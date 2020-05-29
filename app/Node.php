@@ -8,11 +8,11 @@ class Node extends Model
 {
     //
     protected $fillable = [
-        'tootltip',
+        'tooltip', 'graph_id'
     ];
     
     protected $hidden = [
-        'created_at', 'updated_at', 'graph_id'
+        'created_at', 'updated_at'
     ];
 
     public function graph()

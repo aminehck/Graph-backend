@@ -20,3 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('graphs', 'GraphController');
 Route::get('/graphs/{id}/edit', 'GraphController@edit');
 Route::get('/graphs/{id}/statistics', 'GraphController@statistics');
+
+Route::post('nodes', 'NodeController@store');
+Route::put('nodes/{node}', 'NodeController@update');
+Route::delete('nodes/{node}', 'NodeController@destroy');
